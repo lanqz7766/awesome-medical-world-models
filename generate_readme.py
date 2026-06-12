@@ -28,14 +28,13 @@ TRACK = {
     "T6_surgical_robotic_physiology_world_model":("Surgical, Robotic & Physiology Models",  "手术、机器人与生理模型","t6"),
     "T7_background_methods":                      ("Foundational & Background Methods",      "基础与背景方法",       "t7"),
 }
-LEVELS = ["L0", "L1", "L1b", "L2", "L3", "L4"]
-LEVEL_COLOR = {"L0": "7A7A7A", "L1": "3B6CA8", "L1b": "2E8B86",
+LEVELS = ["L0", "L1", "L2", "L3", "L4"]
+LEVEL_COLOR = {"L0": "7A7A7A", "L1": "3B6CA8",
                "L2": "4E9A51", "L3": "D98A3D", "L4": "C0504D"}
 LEVEL_DESC = {
-    "L0": ("static prediction", "静态预测"),
-    "L1": ("future prediction", "未来预测"),
-    "L1b": ("continuous-time conditional simulation (boundary)", "连续时间条件仿真（边界类）"),
-    "L2": ("action-conditioned simulation", "动作条件仿真"),
+    "L0": ("static prediction (perception)", "静态预测（感知）"),
+    "L1": ("future prediction (Pearl: association)", "未来预测（Pearl：关联）"),
+    "L2": ("action-conditioned simulation (intervention)", "动作条件仿真（干预）"),
     "L3": ("counterfactual reasoning", "反事实推理"),
     "L4": ("planning & control", "规划与控制"),
 }
@@ -107,8 +106,6 @@ T = {  # UI strings: (en, zh)
 def g(key, lang): return T[key][0 if lang == "en" else 1]
 
 def lvl(r):
-    if r.get("paper_id") == "MWM0161":
-        return "L1b"
     m = re.match(r"(L\d)", r.get("capability_level", "") or "")
     return m.group(1) if m else "L?"
 
@@ -211,7 +208,7 @@ def build(rows, lang):
     A(f"- {g('stat_papers',lang)}: **{n}**")
     A(f"- {g('stat_open',lang)}: **{nopen}**")
     A(f"- {g('stat_core',lang)}: **{tier.get('core',0)}**")
-    A(f"- {g('stat_levels',lang)}: **6** (L0 · L1 · L1b · L2 · L3 · L4)")
+    A(f"- {g('stat_levels',lang)}: **5** (L0 · L1 · L2 · L3 · L4), anchored to Pearl's ladder of causation")
     A(f"- {g('stat_tracks',lang)}: **7**")
     A(f"- {g('stat_verified',lang)}: **{LAST_VERIFIED}**")
     A(f"- {g('lang',lang)}")
